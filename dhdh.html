@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Kalkulator Cashback Kekalahan Game</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: system-ui, 'Segoe UI', 'Roboto', sans-serif;
+        }
+        body {
+            background: linear-gradient(145deg, #0a0f1e 0%, #0c1222 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .card {
+            background: rgba(22, 28, 46, 0.9);
+            backdrop-filter: blur(2px);
+            border-radius: 48px;
+            padding: 28px 24px 32px;
+            max-width: 460px;
+            width: 100%;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
+            transition: all 0.2s ease;
+        }
+        h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            margin: 0 0 8px 0;
+            background: linear-gradient(135deg, #FFD966, #FFA559);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+        }
+        .sub {
+            color: #8E9AAF;
+            margin-bottom: 28px;
+            font-weight: 500;
+            border-left: 3px solid #FFA559;
+            padding-left: 12px;
+            font-size: 0.9rem;
+        }
+        .input-group {
+            margin-bottom: 24px;
+        }
+        label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #CBD5F0;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
+        }
+        label i {
+            font-style: normal;
+            font-size: 1.2rem;
+        }
+        input {
+            width: 100%;
+            padding: 16px 18px;
+            background: #101624;
+            border: 1.5px solid #2A3456;
+            border-radius: 28px;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #F0F3FA;
+            outline: none;
+            transition: all 0.2s;
+        }
+        input:focus {
+            border-color: #FFA559;
+            box-shadow: 0 0 0 3px rgba(255,165,89,0.2);
+        }
+        .preset-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        .preset {
+            background: #1A1F33;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 40px;
+            color: #FFD966;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .preset:hover {
+            background: #2A345A;
+            color: white;
+        }
+        .cashback-box {
+            background: linear-gradient(120deg, #111827, #0B0F1A);
+            border-radius: 40px;
+            padding: 20px 24px;
+            margin: 28px 0 20px;
+            text-align: center;
+            border: 1px solid rgba(255,165,89,0.3);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        .cashback-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #9AA4BF;
+            margin-bottom: 8px;
+        }
+        .cashback-value {
+            font-size: 3.4rem;
+            font-weight: 800;
+            color: #FFD966;
+            line-height: 1;
+            word-break: break-word;
+        }
+        .cashback-value small {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        .detail {
+            display: flex;
+            justify-content: space-between;
+            background: #0E1422;
+            padding: 12px 18px;
+            border-radius: 32px;
+            margin: 16px 0 10px;
+            font-size: 0.9rem;
+        }
+        .detail span:first-child {
+            color: #A0AAC8;
+        }
+        .detail span:last-child {
+            font-weight: 700;
+            color: #FFCF8A;
+        }
+        button {
+            width: 100%;
+            background: #FFA559;
+            border: none;
+            padding: 14px;
+            border-radius: 44px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #0F1322;
+            margin-top: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 12px rgba(255,165,89,0.3);
+        }
+        button:active {
+            transform: scale(0.97);
+        }
+        .footer {
+            font-size: 0.7rem;
+            text-align: center;
+            color: #4C567A;
+            margin-top: 24px;
+        }
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button {
+            opacity: 0.5;
+        }
+        @media (max-width: 480px) {
+            .card { padding: 20px 18px; }
+            .cashback-value { font-size: 2.6rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>🎮 Cashback Kekalahan</h1>
+    <div class="sub">Klaim cashback 3% — hitung instan</div>
+
+    <div class="input-group">
+        <label>💰 Total Kekalahan (Rp)</label>
+        <input type="number" id="lossAmount" placeholder="Contoh: 25000" value="25000">
+        <div class="preset-buttons">
+            <button class="preset" data-value="25000">25K</button>
+            <button class="preset" data-value="50000">50K</button>
+            <button class="preset" data-value="100000">100K</button>
+            <button class="preset" data-value="250000">250K</button>
+        </div>
+    </div>
+
+    <div class="input-group">
+        <label>🔁 Persentase Cashback (%)</label>
+        <input type="number" id="cashbackPercent" value="3" step="0.5">
+        <div class="preset-buttons">
+            <button class="preset" data-percent="3">3% (standar)</button>
+            <button class="preset" data-percent="5">5%</button>
+            <button class="preset" data-percent="10">10%</button>
+        </div>
+    </div>
+
+    <div class="cashback-box">
+        <div class="cashback-label">🎁 TOTAL CASHBACK KAMU</div>
+        <div class="cashback-value" id="cashbackDisplay">Rp 0</div>
+    </div>
+
+    <div class="detail">
+        <span>📉 Kekalahan:</span>
+        <span id="lossDetail">Rp 25.000</span>
+    </div>
+    <div class="detail">
+        <span>✨ Persentase:</span>
+        <span id="percentDetail">3%</span>
+    </div>
+
+    <button id="hitungBtn">⚡ HITUNG CASHBACK ⚡</button>
+    <div class="footer">* cashback = kekalahan × (persen / 100)</div>
+</div>
+
+<script>
+    // DOM elements
+    const lossInput = document.getElementById('lossAmount');
+    const percentInput = document.getElementById('cashbackPercent');
+    const cashbackSpan = document.getElementById('cashbackDisplay');
+    const lossDetailSpan = document.getElementById('lossDetail');
+    const percentDetailSpan = document.getElementById('percentDetail');
+    const hitungBtn = document.getElementById('hitungBtn');
+
+    // fungsi utama hitung & render
+    function hitungCashback() {
+        // baca nilai, bersihin kalau kosong/null
+        let loss = parseFloat(lossInput.value);
+        let percent = parseFloat(percentInput.value);
+
+        // validasi: jika NaN atau minus, set ke 0
+        if (isNaN(loss) || loss < 0) loss = 0;
+        if (isNaN(percent) || percent < 0) percent = 0;
+
+        // hitung cashback
+        let cashback = loss * (percent / 100);
+        
+        // format Rupiah tanpa desimal (karena cashback game biasanya bulat)
+        // tapi biar rapi, kalau ada desimal ditampilkan 2 angka di belakang koma
+        const formatter = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        });
+        
+        // Tampilkan cashback
+        cashbackSpan.innerHTML = formatter.format(cashback);
+        
+        // detail kekalahan & persen
+        lossDetailSpan.innerHTML = formatter.format(loss);
+        percentDetailSpan.innerHTML = percent + '%';
+    }
+
+    // event tombol hitung
+    hitungBtn.addEventListener('click', () => {
+        hitungCashback();
+    });
+
+    // event ketika input berubah (real-time biar smooth)
+    lossInput.addEventListener('input', () => hitungCashback());
+    percentInput.addEventListener('input', () => hitungCashback());
+
+    // preset untuk kekalahan (tombol 25k,50k,dll)
+    document.querySelectorAll('.preset[data-value]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const val = btn.getAttribute('data-value');
+            lossInput.value = val;
+            hitungCashback();
+        });
+    });
+
+    // preset persentase
+    document.querySelectorAll('.preset[data-percent]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const perc = btn.getAttribute('data-percent');
+            percentInput.value = perc;
+            hitungCashback();
+        });
+    });
+
+    // hitung pertama kali saat halaman dimuat
+    hitungCashback();
+</script>
+</body>
+</html>
