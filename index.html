@@ -3,291 +3,470 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Kalkulator Cashback Kekalahan Game</title>
+    <title>Real-time: Jumlah Kelahiran dan Kematian Dunia 🌍</title>
     <style>
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
-            font-family: system-ui, 'Segoe UI', 'Roboto', sans-serif;
+            user-select: none; /* mencegah teks terblok secara tidak sengaja, tetap nyaman */
         }
+
         body {
-            background: linear-gradient(145deg, #0a0f1e 0%, #0c1222 100%);
+            background: linear-gradient(145deg, #0a2f3f 0%, #0b3b4f 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 0;
+            font-family: 'Segoe UI', 'Poppins', system-ui, 'Inter', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
             padding: 20px;
         }
-        .card {
-            background: rgba(22, 28, 46, 0.9);
-            backdrop-filter: blur(2px);
-            border-radius: 48px;
-            padding: 28px 24px 32px;
-            max-width: 460px;
+
+        /* Kartu utama */
+        .world-card {
+            max-width: 1200px;
             width: 100%;
-            box-shadow: 0 25px 45px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 56px;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            padding: 28px 24px 38px;
             transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.25);
         }
-        h1 {
-            font-size: 1.9rem;
-            font-weight: 700;
-            margin: 0 0 8px 0;
-            background: linear-gradient(135deg, #FFD966, #FFA559);
+
+        /* header dunia */
+        .globe-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .globe-header h1 {
+            font-size: 2.2rem;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #FFF9E6, #FFE6B0);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: -0.3px;
-        }
-        .sub {
-            color: #8E9AAF;
-            margin-bottom: 28px;
-            font-weight: 500;
-            border-left: 3px solid #FFA559;
-            padding-left: 12px;
-            font-size: 0.9rem;
-        }
-        .input-group {
-            margin-bottom: 24px;
-        }
-        label {
-            display: flex;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: inline-flex;
             align-items: center;
-            gap: 8px;
-            color: #CBD5F0;
-            font-weight: 600;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-            letter-spacing: 0.3px;
-        }
-        label i {
-            font-style: normal;
-            font-size: 1.2rem;
-        }
-        input {
-            width: 100%;
-            padding: 16px 18px;
-            background: #101624;
-            border: 1.5px solid #2A3456;
-            border-radius: 28px;
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: #F0F3FA;
-            outline: none;
-            transition: all 0.2s;
-        }
-        input:focus {
-            border-color: #FFA559;
-            box-shadow: 0 0 0 3px rgba(255,165,89,0.2);
-        }
-        .preset-buttons {
-            display: flex;
             gap: 12px;
-            margin-top: 12px;
             flex-wrap: wrap;
+            justify-content: center;
         }
-        .preset {
-            background: #1A1F33;
-            border: none;
-            padding: 8px 18px;
-            border-radius: 40px;
-            color: #FFD966;
-            font-weight: 600;
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: 0.15s;
+
+        .globe-header h1 span {
+            font-size: 2.5rem;
         }
-        .preset:hover {
-            background: #2A345A;
-            color: white;
+
+        .sub {
+            color: #CFE9F0;
+            font-weight: 500;
+            background: rgba(0, 0, 0, 0.3);
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            margin-top: 12px;
+            backdrop-filter: blur(4px);
         }
-        .cashback-box {
-            background: linear-gradient(120deg, #111827, #0B0F1A);
-            border-radius: 40px;
-            padding: 20px 24px;
-            margin: 28px 0 20px;
+
+        /* DUA KOLOM UTAMA */
+        .stats-dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            margin: 35px 0 30px;
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 240px;
+            background: rgba(10, 25, 35, 0.65);
+            backdrop-filter: blur(8px);
+            border-radius: 48px;
+            padding: 28px 20px 32px;
             text-align: center;
-            border: 1px solid rgba(255,165,89,0.3);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s;
+            box-shadow: 0 15px 25px -12px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255,215,150,0.4);
         }
-        .cashback-label {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #9AA4BF;
-            margin-bottom: 8px;
+
+        .stat-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 25px 30px -12px black;
+            border-color: rgba(255,220,100,0.7);
         }
-        .cashback-value {
-            font-size: 3.4rem;
+
+        .stat-icon {
+            font-size: 3.5rem;
+            margin-bottom: 12px;
+        }
+
+        .stat-title {
+            font-size: 1.7rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            background: linear-gradient(120deg, #F9F3D9, #FFE5B4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .stat-number {
+            font-size: 4rem;
             font-weight: 800;
-            color: #FFD966;
-            line-height: 1;
-            word-break: break-word;
+            font-family: 'JetBrains Mono', 'Fira Mono', monospace;
+            background: linear-gradient(135deg, #FFFFFF, #FFE6B0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
+            margin: 12px 0;
         }
-        .cashback-value small {
+
+        .stat-rate {
+            font-size: 1rem;
+            color: #C2E0E8;
+            background: rgba(0,0,0,0.4);
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 40px;
+            margin-top: 10px;
+        }
+
+        /* SELISIH POPULASI */
+        .net-population {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 60px;
+            padding: 18px 20px;
+            margin: 20px 0 30px;
+            text-align: center;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255,210,130,0.5);
+        }
+
+        .net-label {
             font-size: 1.2rem;
             font-weight: 500;
+            color: #FFEFC0;
         }
-        .detail {
+
+        .net-value {
+            font-size: 2.8rem;
+            font-weight: 800;
+            font-family: monospace;
+            background: linear-gradient(135deg, #FFE6B0, #FFC285);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-left: 12px;
+        }
+
+        /* info footer dan waktu */
+        .info-footer {
             display: flex;
             justify-content: space-between;
-            background: #0E1422;
-            padding: 12px 18px;
-            border-radius: 32px;
-            margin: 16px 0 10px;
-            font-size: 0.9rem;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: #CDE8F0;
+            border-top: 1px dashed rgba(255,245,180,0.3);
+            padding-top: 22px;
         }
-        .detail span:first-child {
-            color: #A0AAC8;
+
+        .timestamp {
+            font-family: monospace;
+            background: #071e26;
+            padding: 5px 12px;
+            border-radius: 30px;
         }
-        .detail span:last-child {
-            font-weight: 700;
-            color: #FFCF8A;
+
+        .source-note {
+            font-size: 0.75rem;
+            opacity: 0.8;
         }
+
         button {
-            width: 100%;
-            background: #FFA559;
+            background: #ffcd7e;
             border: none;
-            padding: 14px;
-            border-radius: 44px;
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: #0F1322;
-            margin-top: 12px;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            color: #1f3e48;
             cursor: pointer;
             transition: 0.2s;
-            box-shadow: 0 4px 12px rgba(255,165,89,0.3);
+            font-family: inherit;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
-        button:active {
-            transform: scale(0.97);
+
+        button:hover {
+            background: #ffbc54;
+            transform: scale(1.02);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.25);
         }
-        .footer {
-            font-size: 0.7rem;
-            text-align: center;
-            color: #4C567A;
-            margin-top: 24px;
-        }
-        input[type=number]::-webkit-inner-spin-button, 
-        input[type=number]::-webkit-outer-spin-button {
-            opacity: 0.5;
-        }
-        @media (max-width: 480px) {
-            .card { padding: 20px 18px; }
-            .cashback-value { font-size: 2.6rem; }
+
+        @media (max-width: 700px) {
+            .world-card { padding: 18px; }
+            .stat-number { font-size: 2.7rem; }
+            .net-value { font-size: 2rem; }
+            .stat-title { font-size: 1.3rem; }
         }
     </style>
 </head>
 <body>
-<div class="card">
-    <h1>🎮 Cashback Kekalahan</h1>
-    <div class="sub">Klaim cashback 3% — hitung instan</div>
 
-    <div class="input-group">
-        <label>💰 Total Kekalahan (Rp)</label>
-        <input type="number" id="lossAmount" placeholder="Contoh: 25000" value="25000">
-        <div class="preset-buttons">
-            <button class="preset" data-value="25000">25K</button>
-            <button class="preset" data-value="50000">50K</button>
-            <button class="preset" data-value="100000">100K</button>
-            <button class="preset" data-value="250000">250K</button>
+<div class="world-card">
+    <div class="globe-header">
+        <h1>
+            <span>🌎</span> LIVE: Dunia Bernapas <span>👶⚰️</span>
+        </h1>
+        <div class="sub">📊 Simulasi kelahiran & kematian global — berdasarkan estimasi data nyata (per detik)</div>
+    </div>
+
+    <div class="stats-dashboard">
+        <!-- KELAHIRAN -->
+        <div class="stat-card">
+            <div class="stat-icon">👶🍼</div>
+            <div class="stat-title">Kelahiran</div>
+            <div class="stat-number" id="birthCount">0</div>
+            <div class="stat-rate">📈 +4,2 kelahiran / detik</div>
+        </div>
+        <!-- KEMATIAN -->
+        <div class="stat-card">
+            <div class="stat-icon">⚰️🕊️</div>
+            <div class="stat-title">Kematian</div>
+            <div class="stat-number" id="deathCount">0</div>
+            <div class="stat-rate">📉 +1,9 kematian / detik</div>
         </div>
     </div>
 
-    <div class="input-group">
-        <label>🔁 Persentase Cashback (%)</label>
-        <input type="number" id="cashbackPercent" value="3" step="0.5">
-        <div class="preset-buttons">
-            <button class="preset" data-percent="3">3% (standar)</button>
-            <button class="preset" data-percent="5">5%</button>
-            <button class="preset" data-percent="10">10%</button>
+    <!-- SELISIH (pertumbuhan netto) -->
+    <div class="net-population">
+        <span class="net-label">🌱 Pertumbuhan populasi bersih (tahun ini) : </span>
+        <span class="net-value" id="netGrowth">0</span>
+        <span style="font-size:1rem;"> jiwa ✨</span>
+    </div>
+
+    <div class="info-footer">
+        <div class="timestamp">
+            🕒 Waktu simulasi: <span id="liveClock">--:--:--</span>
         </div>
+        <div class="source-note">
+            ⚡ Berdasarkan tingkat kelahiran ~4,2 per detik & kematian ~1,9 per detik (estimasi WHO/UN data)
+        </div>
+        <button id="resetBtn">⟳ Reset Counter (tahun berjalan)</button>
     </div>
-
-    <div class="cashback-box">
-        <div class="cashback-label">🎁 TOTAL CASHBACK KAMU</div>
-        <div class="cashback-value" id="cashbackDisplay">Rp 0</div>
-    </div>
-
-    <div class="detail">
-        <span>📉 Kekalahan:</span>
-        <span id="lossDetail">Rp 25.000</span>
-    </div>
-    <div class="detail">
-        <span>✨ Persentase:</span>
-        <span id="percentDetail">3%</span>
-    </div>
-
-    <button id="hitungBtn">⚡ HITUNG CASHBACK ⚡</button>
-    <div class="footer">* cashback = kekalahan × (persen / 100)</div>
 </div>
 
 <script>
-    // DOM elements
-    const lossInput = document.getElementById('lossAmount');
-    const percentInput = document.getElementById('cashbackPercent');
-    const cashbackSpan = document.getElementById('cashbackDisplay');
-    const lossDetailSpan = document.getElementById('lossDetail');
-    const percentDetailSpan = document.getElementById('percentDetail');
-    const hitungBtn = document.getElementById('hitungBtn');
-
-    // fungsi utama hitung & render
-    function hitungCashback() {
-        // baca nilai, bersihin kalau kosong/null
-        let loss = parseFloat(lossInput.value);
-        let percent = parseFloat(percentInput.value);
-
-        // validasi: jika NaN atau minus, set ke 0
-        if (isNaN(loss) || loss < 0) loss = 0;
-        if (isNaN(percent) || percent < 0) percent = 0;
-
-        // hitung cashback
-        let cashback = loss * (percent / 100);
+    (function(){
+        // ----------------------------------------------
+        // DATA SIMULASI REALISTIS
+        // Kelahiran global: sekitar 4,2 per detik (rata-rata)
+        // Kematian global   : sekitar 1,9 per detik
+        // Sumber referensi: Worldometer / PBB (perkiraan)
+        // Akurasi simulasi: update setiap 100ms untuk gerakan halus dan real-time
+        // Dengan delta time agar angka terus bertambah sesuai laju per detik.
+        // Tapi karena kita ingin tampilan seperti "live ticker" yang akurat,
+        // kita akan menggunakan pendekatan interval + akumulasi berdasarkan fraksi detik.
+        // Simulasi ini mempertahankan angka yang terus bertambah secara progresif.
+        // -------------------------------------------------
         
-        // format Rupiah tanpa desimal (karena cashback game biasanya bulat)
-        // tapi biar rapi, kalau ada desimal ditampilkan 2 angka di belakang koma
-        const formatter = new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
+        // Laju per detik (real-time)
+        const BIRTH_RATE_PER_SEC = 4.2;      // 4,2 kelahiran tiap detik
+        const DEATH_RATE_PER_SEC = 1.9;      // 1,9 kematian tiap detik
+        
+        // Waktu awal simulasi (berdasarkan tanggal mulai tahun ini? atau kita mulai dari awal tahun 2026? Tapi agar realistis, kita bisa mulai dari awal tahun 2026 atau dari jumlah default yang mendekati data aktual tahun ini)
+        // Namun biar fleksibel, kita mulai dari angka awal (counter sejak 1 Januari 2026 pukul 00:00 UTC)
+        // Karena pengguna bisa reset kapan saja (reset ke awal tahun / awal periode).
+        // Kita simpan anchor timestamp untuk menghitung jumlah sebenarnya berdasarkan delta waktu dari awal epoch internal.
+        
+        // Strategi: Simpan "startTime" sebagai patokan awal periode (bisa di-reset).
+        // Pada setiap tick, hitung detik yang berlalu dari startRealTime, lalu kalikan dengan rate.
+        // Dan juga kita perlu nilai awal counter (bisa 0 saat reset, atau sesuai data awal tahun).
+        // Agar terlihat natural, setelah reset, counter dimulai dari 0 untuk periode berjalan (tahun ini).
+        // User dapat melihat pertumbuhan secara real-time dari awal.
+        
+        let startTime = Date.now();      // timestamp acuan untuk perhitungan delta
+        let initialBirths = 0;           // offset kelahiran (setelah reset jadi 0)
+        let initialDeaths = 0;
+        
+        // Kita akan menyimpan elemen DOM
+        const birthEl = document.getElementById('birthCount');
+        const deathEl = document.getElementById('deathCount');
+        const netEl = document.getElementById('netGrowth');
+        const clockSpan = document.getElementById('liveClock');
+        
+        // Untuk animasi yang mulus, kita gunakan requestAnimationFrame atau setInterval (update 20-30 fps cukup)
+        // Lebih baik setInterval 50ms agar angka bergerak halus.
+        let intervalId = null;
+        
+        // fungsi pembantu format ribuan (memisahkan dengan koma atau titik, lebih rapi)
+        function formatNumber(num) {
+            // Jika angka negatif? net bisa negatif? kemungkinan pertumbuhan net positif karena birth > death, tapi jika reset awal, net mungkin sedikit positif. tapi kita format positif/negatif
+            return new Intl.NumberFormat('id-ID').format(Math.floor(Math.abs(num))) + (num < 0 ? ' (negatif)' : '');
+        }
+        
+        // fungsi update counter berdasarkan delta dari startTime
+        function updateCounters() {
+            const now = Date.now();
+            const elapsedSeconds = (now - startTime) / 1000;   // detik pecahan
+            
+            // Total kelahiran = offset awal + (laju per detik * elapsedSeconds)
+            let totalBirths = initialBirths + (BIRTH_RATE_PER_SEC * elapsedSeconds);
+            let totalDeaths = initialDeaths + (DEATH_RATE_PER_SEC * elapsedSeconds);
+            
+            // Pastikan tidak negatif (meski tidak akan terjadi)
+            if (totalBirths < 0) totalBirths = 0;
+            if (totalDeaths < 0) totalDeaths = 0;
+            
+            // Karena data nyata harus integer, kita tampilkan dalam bentuk integer (pembulatan ke bawah / floor)
+            // tapi lebih baik menampilkan angka bulat tanpa koma desimal (seperti jumlah jiwa)
+            const displayBirths = Math.floor(totalBirths);
+            const displayDeaths = Math.floor(totalDeaths);
+            const netPopulation = displayBirths - displayDeaths;
+            
+            // Update DOM
+            birthEl.innerText = displayBirths.toLocaleString('id-ID');
+            deathEl.innerText = displayDeaths.toLocaleString('id-ID');
+            
+            // Net growth: beri warna emosi sedikit (plus / minus)
+            if (netPopulation >= 0) {
+                netEl.innerHTML = `+${netPopulation.toLocaleString('id-ID')}  🌍`;
+                netEl.style.textShadow = "0 0 4px #90ffb0";
+            } else {
+                netEl.innerHTML = `${netPopulation.toLocaleString('id-ID')}  ⚠️`;
+                netEl.style.textShadow = "0 0 4px #ffb090";
+            }
+        }
+        
+        // Live clock (waktu lokal)
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('id-ID', { hour12: false });
+            clockSpan.innerText = timeStr;
+        }
+        
+        // Fungsi reset (set ulang periode: mulai dari 0 kelahiran dan 0 kematian, dan reset waktu acuan)
+        function resetSimulation() {
+            // Set ulang startTime ke sekarang, dan set offset awal menjadi 0
+            startTime = Date.now();
+            initialBirths = 0;
+            initialDeaths = 0;
+            // langsung update agar angka nol sesaat
+            updateCounters();
+            // efek tambahan : sedikit getaran visual halus (opsional)
+            const card = document.querySelector('.world-card');
+            if(card) {
+                card.style.transform = 'scale(0.99)';
+                setTimeout(() => { if(card) card.style.transform = ''; }, 150);
+            }
+        }
+        
+        // Inisialisasi event listener untuk tombol reset
+        const resetBtn = document.getElementById('resetBtn');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                resetSimulation();
+            });
+        }
+        
+        // SINKRONISASI AWAL : Apakah kita ingin memulai dengan angka yang mencerminkan data dari awal tahun 2026?
+        // Agar tidak terlihat kosong total saat load, kita bisa set initial offset berdasarkan estimasi sejak 1 Januari 2026 00:00:00 sampai sekarang.
+        // Ini memberikan pengalaman "real-time jumplah sejak awal tahun" yang lebih keren.
+        // Hitung detik yang telah berlalu dari 1 Januari 2026 00:00:00 UTC ke waktu sekarang.
+        // Tetapi karena waktu lokal pengguna bisa berbeda zona, kita gunakan UTC untuk konsistensi.
+        // Hal ini membuat angka awal tidak nol namun sesuai estimasi tahun berjalan.
+        function initializeWithYearOffset() {
+            // 1 Januari 2026, 00:00:00 UTC
+            const startOfYearUTC = Date.UTC(2026, 0, 1, 0, 0, 0);
+            const now = Date.now(); // ms saat ini (local timestamp, tapi perbandingan UTC valid)
+            const secondsSinceYearStart = (now - startOfYearUTC) / 1000;
+            
+            if (secondsSinceYearStart > 0) {
+                // Hitung perkiraan kelahiran & kematian sejak awal tahun
+                let estimatedBirths = BIRTH_RATE_PER_SEC * secondsSinceYearStart;
+                let estimatedDeaths = DEATH_RATE_PER_SEC * secondsSinceYearStart;
+                // Simpan sebagai offset awal (initialBirths / deaths)
+                initialBirths = estimatedBirths;
+                initialDeaths = estimatedDeaths;
+                // startTime kita set ke 'startOfYearUTC' agar delta berjalan mulus dari titik tahun baru?
+                // Tapi supaya updateCounters bekerja dengan formula: total = initial + rate*(now-startTime)
+                // Agar total = estimated + rate*(now - startTime) menghasilkan nilai yang terus bertambah konsisten,
+                // jika startTime = startOfYearUTC, maka:
+                // total = estimatedBirths + rate*(now-startOfYearUTC)
+                // = rate*secondsSinceYearStart + rate*0 = rate*secondsSinceYearStart (sama)
+                // Namun jika kita pakai startTime = startOfYearUTC, maka initialBirths harus 0? agar tidak double.
+                // Cara paling mudah: atur startTime = startOfYearUTC, dan initialBirths = 0, initialDeaths=0.
+                // Tetapi agar angka tampil sesuai estimasi sejak tahun baru, kita cukup set startTime ke awal tahun dan initial 0.
+                // Tapi kita ingin agar angka awal yang muncul langsung besar (misal sudah jutaan) sesuai tahun 2026.
+                // Maka solusi: biarkan startTime = sekarang, dan initialBirths = estimatedBirths, initialDeaths = estimatedDeaths.
+                // Dengan begitu: total = initial + rate*(now - startTime) ; karena startTime = sekarang, delta = 0, total = initial (langsung besar).
+                // Lalu selanjutnya bertambah sesuai laju dari sekarang. Ini paling mudah dan langsung menunjukkan jumlah "sejak 1 Januari 2026 hingga detik ini"
+                startTime = Date.now();  // titik referensi mulai sekarang
+                initialBirths = estimatedBirths;
+                initialDeaths = estimatedDeaths;
+            } else {
+                // Jika jam sistem mundur ke sebelum 2026 (tidak mungkin di perangkat normal)
+                startTime = Date.now();
+                initialBirths = 0;
+                initialDeaths = 0;
+            }
+            // update tampilan segera
+            updateCounters();
+        }
+        
+        // agar angka terus bergerak dinamis dan jam realtime
+        function startLiveUpdates() {
+            // update counter setiap 50ms (smooth incremental)
+            if(intervalId) clearInterval(intervalId);
+            intervalId = setInterval(() => {
+                updateCounters();
+                updateClock();
+            }, 80);  // 80ms cukup mulus & ringan
+        }
+        
+        // memastikan jam diperbarui setiap detik juga, namun sudah di setInterval, jadi ok.
+        // tambahan: event visibility change (tidak perlu rumit)
+        
+        // Inisialisasi utama
+        initializeWithYearOffset();   // set angka awal dari estimasi tahun 2026
+        startLiveUpdates();
+        
+        // Ekstra: Jaga akurasi jika halaman tidak aktif (interval tetap jalan tapi fine)
+        // Tidak perlu mematikan, karena performa ringan.
+        // Optional: saat window focus, sinkronkan ulang startTime untuk menghindari drift? tidak masalah.
+        // Namun jika pengguna mengganti waktu sistem secara drastis? itu edge case, abaikan.
+        
+        // Bonus: tooltip dinamis menampilkan kecepatan per jam
+        const birthRateSpan = document.querySelector('.stat-card:first-child .stat-rate');
+        const deathRateSpan = document.querySelector('.stat-card:last-child .stat-rate');
+        if(birthRateSpan) birthRateSpan.innerHTML = `📈 +${BIRTH_RATE_PER_SEC} kelahiran / detik (≈ ${(BIRTH_RATE_PER_SEC*3600).toFixed(0)}/jam)`;
+        if(deathRateSpan) deathRateSpan.innerHTML = `📉 +${DEATH_RATE_PER_SEC} kematian / detik (≈ ${(DEATH_RATE_PER_SEC*3600).toFixed(0)}/jam)`;
+        
+        // Efek interaksi tambahan pada kartu
+        const cards = document.querySelectorAll('.stat-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', (e) => {
+                card.style.transition = '0.15s';
+            });
         });
         
-        // Tampilkan cashback
-        cashbackSpan.innerHTML = formatter.format(cashback);
+        // Tampilkan pesan sambutan ringan di console (optional)
+        console.log('🌍 Live counter kelahiran & kematian global — data estimasi 4.2/s lahir & 1.9/s meninggal.');
         
-        // detail kekalahan & persen
-        lossDetailSpan.innerHTML = formatter.format(loss);
-        percentDetailSpan.innerHTML = percent + '%';
-    }
-
-    // event tombol hitung
-    hitungBtn.addEventListener('click', () => {
-        hitungCashback();
-    });
-
-    // event ketika input berubah (real-time biar smooth)
-    lossInput.addEventListener('input', () => hitungCashback());
-    percentInput.addEventListener('input', () => hitungCashback());
-
-    // preset untuk kekalahan (tombol 25k,50k,dll)
-    document.querySelectorAll('.preset[data-value]').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const val = btn.getAttribute('data-value');
-            lossInput.value = val;
-            hitungCashback();
-        });
-    });
-
-    // preset persentase
-    document.querySelectorAll('.preset[data-percent]').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const perc = btn.getAttribute('data-percent');
-            percentInput.value = perc;
-            hitungCashback();
-        });
-    });
-
-    // hitung pertama kali saat halaman dimuat
-    hitungCashback();
+        // Perbaiki saat resize atau potrait, tetap rapi
+        window.addEventListener('resize', () => {});
+        
+        // memastikan nilai net tidak aneh pada load pertama
+        setTimeout(() => updateCounters(), 10);
+    })();
 </script>
 </body>
 </html>
