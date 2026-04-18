@@ -3,470 +3,631 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Real-time: Jumlah Kelahiran dan Kematian Dunia 🌍</title>
+    <title>Rendzz - 30 Hari Anti Rokok Challenge</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            user-select: none; /* mencegah teks terblok secara tidak sengaja, tetap nyaman */
+            user-select: none; /* prevent accidental selection, better UI for tap */
         }
 
         body {
-            background: linear-gradient(145deg, #0a2f3f 0%, #0b3b4f 100%);
+            background: linear-gradient(145deg, #0b2b26 0%, #0a1f1a 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Segoe UI', 'Poppins', system-ui, 'Inter', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
-            padding: 20px;
+            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, 'Inter', sans-serif;
+            padding: 1rem;
         }
 
-        /* Kartu utama */
-        .world-card {
-            max-width: 1200px;
+        /* main card */
+        .card {
+            max-width: 550px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(22, 40, 35, 0.85);
             backdrop-filter: blur(12px);
             border-radius: 56px;
-            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.2);
-            padding: 28px 24px 38px;
+            border: 1px solid rgba(78, 205, 150, 0.4);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(70, 200, 140, 0.2) inset;
+            overflow: hidden;
             transition: all 0.2s ease;
-            border: 1px solid rgba(255, 255, 255, 0.25);
         }
 
-        /* header dunia */
-        .globe-header {
+        .header {
+            background: #0e2a24;
+            padding: 1.6rem 1.8rem 1.2rem;
             text-align: center;
-            margin-bottom: 30px;
+            border-bottom: 2px solid #2f9e6b;
         }
 
-        .globe-header h1 {
+        .header h1 {
             font-size: 2.2rem;
             letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #FFF9E6, #FFE6B0);
+            font-weight: 800;
+            background: linear-gradient(135deg, #D4FFB0, #6fcf97);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
+            text-shadow: 0 2px 3px rgba(0,0,0,0.2);
         }
 
-        .globe-header h1 span {
-            font-size: 2.5rem;
-        }
-
-        .sub {
-            color: #CFE9F0;
-            font-weight: 500;
-            background: rgba(0, 0, 0, 0.3);
+        .badge {
+            background: #1e3a33;
             display: inline-block;
-            padding: 6px 18px;
+            padding: 0.3rem 1rem;
             border-radius: 60px;
-            font-size: 0.9rem;
             margin-top: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #b6f0d0;
             backdrop-filter: blur(4px);
         }
 
-        /* DUA KOLOM UTAMA */
-        .stats-dashboard {
+        .stats-area {
+            padding: 1.8rem 1.5rem;
+            background: #0b241f;
+            border-bottom: 1px solid #2c5a4c;
+        }
+
+        .progress-container {
+            background: #1e302b;
+            border-radius: 60px;
+            height: 28px;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.4);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #ffb347, #ff7e05);
+            border-radius: 60px;
+            transition: width 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             display: flex;
-            flex-wrap: wrap;
-            gap: 28px;
-            margin: 35px 0 30px;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 12px;
+            color: #1e2a1f;
+            font-weight: bold;
+            font-size: 0.8rem;
         }
 
-        .stat-card {
-            flex: 1;
-            min-width: 240px;
-            background: rgba(10, 25, 35, 0.65);
-            backdrop-filter: blur(8px);
-            border-radius: 48px;
-            padding: 28px 20px 32px;
+        .percent-text {
             text-align: center;
-            transition: transform 0.2s ease, box-shadow 0.2s;
-            box-shadow: 0 15px 25px -12px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255,215,150,0.4);
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: #f5ffdd;
+            letter-spacing: 2px;
+            margin: 12px 0 4px;
         }
 
-        .stat-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 25px 30px -12px black;
-            border-color: rgba(255,220,100,0.7);
+        .days-counter {
+            display: flex;
+            justify-content: space-between;
+            background: #0b1f1b;
+            border-radius: 48px;
+            padding: 0.7rem 1.2rem;
+            margin: 20px 0 5px;
         }
 
-        .stat-icon {
-            font-size: 3.5rem;
+        .day-box {
+            text-align: center;
+        }
+
+        .day-label {
+            font-size: 0.7rem;
+            color: #88b6a4;
+            font-weight: 600;
+        }
+
+        .day-number {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: #f2ffcf;
+            line-height: 1;
+        }
+
+        .streak-message {
+            background: #15312b;
+            padding: 0.8rem;
+            border-radius: 48px;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #d2f5e2;
+        }
+
+        .checkin-area {
+            padding: 1.8rem 1.8rem 2rem;
+            text-align: center;
+        }
+
+        .btn-check {
+            background: linear-gradient(105deg, #249f6b, #1c7c52);
+            border: none;
+            width: 85%;
+            padding: 1rem;
+            border-radius: 60px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #0d4b36;
+            transition: 0.08s linear;
+            font-family: inherit;
+        }
+
+        .btn-check:active {
+            transform: translateY(2px);
+            box-shadow: 0 3px 0 #0d4b36;
+        }
+
+        .btn-check.disabled-btn, .btn-check:disabled {
+            opacity: 0.5;
+            transform: translateY(0);
+            filter: grayscale(0.1);
+            cursor: not-allowed;
+            background: #3a6c58;
+            box-shadow: 0 4px 0 #1f4436;
+        }
+
+        .info-note {
+            font-size: 0.75rem;
+            margin-top: 20px;
+            color: #8ac0ac;
+            background: #07221d;
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 60px;
+        }
+
+        .history-section {
+            margin-top: 0.2rem;
+            background: #071c18;
+            padding: 1rem 1.5rem 1.5rem;
+            border-top: 1px solid #2e715a;
+        }
+
+        .history-title {
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            color: #cbebdd;
             margin-bottom: 12px;
         }
 
-        .stat-title {
-            font-size: 1.7rem;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-            background: linear-gradient(120deg, #F9F3D9, #FFE5B4);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 20px;
+        .history-list {
+            max-height: 130px;
+            overflow-y: auto;
+            font-size: 0.8rem;
+            background: #0a2822;
+            border-radius: 28px;
+            padding: 12px 16px;
         }
 
-        .stat-number {
-            font-size: 4rem;
-            font-weight: 800;
-            font-family: 'JetBrains Mono', 'Fira Mono', monospace;
-            background: linear-gradient(135deg, #FFFFFF, #FFE6B0);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 10px rgba(0,0,0,0.3);
-            letter-spacing: 2px;
-            margin: 12px 0;
-        }
-
-        .stat-rate {
-            font-size: 1rem;
-            color: #C2E0E8;
-            background: rgba(0,0,0,0.4);
-            display: inline-block;
-            padding: 6px 14px;
-            border-radius: 40px;
-            margin-top: 10px;
-        }
-
-        /* SELISIH POPULASI */
-        .net-population {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 60px;
-            padding: 18px 20px;
-            margin: 20px 0 30px;
-            text-align: center;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255,210,130,0.5);
-        }
-
-        .net-label {
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: #FFEFC0;
-        }
-
-        .net-value {
-            font-size: 2.8rem;
-            font-weight: 800;
-            font-family: monospace;
-            background: linear-gradient(135deg, #FFE6B0, #FFC285);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-left: 12px;
-        }
-
-        /* info footer dan waktu */
-        .info-footer {
+        .history-item {
+            padding: 6px 0;
+            border-bottom: 1px dashed #2e705a;
+            color: #bce3d4;
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 15px;
-            font-size: 0.85rem;
-            color: #CDE8F0;
-            border-top: 1px dashed rgba(255,245,180,0.3);
-            padding-top: 22px;
         }
 
-        .timestamp {
-            font-family: monospace;
-            background: #071e26;
-            padding: 5px 12px;
-            border-radius: 30px;
-        }
-
-        .source-note {
-            font-size: 0.75rem;
-            opacity: 0.8;
-        }
-
-        button {
-            background: #ffcd7e;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 50px;
+        .reset-btn {
+            background: none;
+            border: 1px solid #e07c4c;
+            color: #ffb185;
+            padding: 8px 14px;
+            border-radius: 40px;
+            font-size: 0.7rem;
             font-weight: bold;
-            color: #1f3e48;
             cursor: pointer;
-            transition: 0.2s;
-            font-family: inherit;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: 0.1s;
+            margin-top: 12px;
+            width: auto;
         }
 
-        button:hover {
-            background: #ffbc54;
-            transform: scale(1.02);
-            box-shadow: 0 6px 14px rgba(0,0,0,0.25);
-        }
-
-        @media (max-width: 700px) {
-            .world-card { padding: 18px; }
-            .stat-number { font-size: 2.7rem; }
-            .net-value { font-size: 2rem; }
-            .stat-title { font-size: 1.3rem; }
+        footer {
+            font-size: 0.65rem;
+            text-align: center;
+            padding: 12px;
+            color: #468b74;
         }
     </style>
 </head>
 <body>
-
-<div class="world-card">
-    <div class="globe-header">
-        <h1>
-            <span>🌎</span> LIVE: Dunia Bernapas <span>👶⚰️</span>
-        </h1>
-        <div class="sub">📊 Simulasi kelahiran & kematian global — berdasarkan estimasi data nyata (per detik)</div>
+<div class="card" id="appRoot">
+    <div class="header">
+        <h1>🚭 RENDZZ</h1>
+        <div class="badge">🔥 30 HARI CHALLENGE · ZERO ROKOK</div>
     </div>
 
-    <div class="stats-dashboard">
-        <!-- KELAHIRAN -->
-        <div class="stat-card">
-            <div class="stat-icon">👶🍼</div>
-            <div class="stat-title">Kelahiran</div>
-            <div class="stat-number" id="birthCount">0</div>
-            <div class="stat-rate">📈 +4,2 kelahiran / detik</div>
+    <div class="stats-area">
+        <div class="progress-container">
+            <div class="progress-fill" id="progressFill">0%</div>
         </div>
-        <!-- KEMATIAN -->
-        <div class="stat-card">
-            <div class="stat-icon">⚰️🕊️</div>
-            <div class="stat-title">Kematian</div>
-            <div class="stat-number" id="deathCount">0</div>
-            <div class="stat-rate">📉 +1,9 kematian / detik</div>
+        <div class="percent-text" id="percentDisplay">0%</div>
+        <div class="days-counter">
+            <div class="day-box">
+                <div class="day-label">HARI KE</div>
+                <div class="day-number" id="currentDay">0</div>
+            </div>
+            <div class="day-box">
+                <div class="day-label">TOTAL HARI</div>
+                <div class="day-number">30</div>
+            </div>
+            <div class="day-box">
+                <div class="day-label">SISA</div>
+                <div class="day-number" id="remainingDays">30</div>
+            </div>
+        </div>
+        <div class="streak-message" id="streakMessage">
+            💪 Belum check-in hari ini. Klik tombol!
         </div>
     </div>
 
-    <!-- SELISIH (pertumbuhan netto) -->
-    <div class="net-population">
-        <span class="net-label">🌱 Pertumbuhan populasi bersih (tahun ini) : </span>
-        <span class="net-value" id="netGrowth">0</span>
-        <span style="font-size:1rem;"> jiwa ✨</span>
+    <div class="checkin-area">
+        <button class="btn-check" id="checkinBtn">
+            ✅ CHECK-IN HARI INI
+        </button>
+        <div class="info-note" id="infoNote">
+            ✔️ Sekali check-in per hari (00:00 - 23:59)
+        </div>
     </div>
 
-    <div class="info-footer">
-        <div class="timestamp">
-            🕒 Waktu simulasi: <span id="liveClock">--:--:--</span>
+    <div class="history-section">
+        <div class="history-title">
+            <span>📜 RIWAYAT CHECK-IN (30 hari terakhir)</span>
+            <button id="resetCycleBtn" class="reset-btn" style="background: #1f3d35;">🔄 Mulai Siklus Baru</button>
         </div>
-        <div class="source-note">
-            ⚡ Berdasarkan tingkat kelahiran ~4,2 per detik & kematian ~1,9 per detik (estimasi WHO/UN data)
+        <div id="historyList" class="history-list">
+            <!-- history items akan diisi js -->
+            <div style="color:#6e9b89; text-align:center;">Memuat data...</div>
         </div>
-        <button id="resetBtn">⟳ Reset Counter (tahun berjalan)</button>
+        <footer>
+            Data tersimpan di localStorage • Tidak hilang meskipun refresh • 30 hari otomatis reset
+        </footer>
     </div>
 </div>
 
 <script>
-    (function(){
-        // ----------------------------------------------
-        // DATA SIMULASI REALISTIS
-        // Kelahiran global: sekitar 4,2 per detik (rata-rata)
-        // Kematian global   : sekitar 1,9 per detik
-        // Sumber referensi: Worldometer / PBB (perkiraan)
-        // Akurasi simulasi: update setiap 100ms untuk gerakan halus dan real-time
-        // Dengan delta time agar angka terus bertambah sesuai laju per detik.
-        // Tapi karena kita ingin tampilan seperti "live ticker" yang akurat,
-        // kita akan menggunakan pendekatan interval + akumulasi berdasarkan fraksi detik.
-        // Simulasi ini mempertahankan angka yang terus bertambah secara progresif.
-        // -------------------------------------------------
-        
-        // Laju per detik (real-time)
-        const BIRTH_RATE_PER_SEC = 4.2;      // 4,2 kelahiran tiap detik
-        const DEATH_RATE_PER_SEC = 1.9;      // 1,9 kematian tiap detik
-        
-        // Waktu awal simulasi (berdasarkan tanggal mulai tahun ini? atau kita mulai dari awal tahun 2026? Tapi agar realistis, kita bisa mulai dari awal tahun 2026 atau dari jumlah default yang mendekati data aktual tahun ini)
-        // Namun biar fleksibel, kita mulai dari angka awal (counter sejak 1 Januari 2026 pukul 00:00 UTC)
-        // Karena pengguna bisa reset kapan saja (reset ke awal tahun / awal periode).
-        // Kita simpan anchor timestamp untuk menghitung jumlah sebenarnya berdasarkan delta waktu dari awal epoch internal.
-        
-        // Strategi: Simpan "startTime" sebagai patokan awal periode (bisa di-reset).
-        // Pada setiap tick, hitung detik yang berlalu dari startRealTime, lalu kalikan dengan rate.
-        // Dan juga kita perlu nilai awal counter (bisa 0 saat reset, atau sesuai data awal tahun).
-        // Agar terlihat natural, setelah reset, counter dimulai dari 0 untuk periode berjalan (tahun ini).
-        // User dapat melihat pertumbuhan secara real-time dari awal.
-        
-        let startTime = Date.now();      // timestamp acuan untuk perhitungan delta
-        let initialBirths = 0;           // offset kelahiran (setelah reset jadi 0)
-        let initialDeaths = 0;
-        
-        // Kita akan menyimpan elemen DOM
-        const birthEl = document.getElementById('birthCount');
-        const deathEl = document.getElementById('deathCount');
-        const netEl = document.getElementById('netGrowth');
-        const clockSpan = document.getElementById('liveClock');
-        
-        // Untuk animasi yang mulus, kita gunakan requestAnimationFrame atau setInterval (update 20-30 fps cukup)
-        // Lebih baik setInterval 50ms agar angka bergerak halus.
-        let intervalId = null;
-        
-        // fungsi pembantu format ribuan (memisahkan dengan koma atau titik, lebih rapi)
-        function formatNumber(num) {
-            // Jika angka negatif? net bisa negatif? kemungkinan pertumbuhan net positif karena birth > death, tapi jika reset awal, net mungkin sedikit positif. tapi kita format positif/negatif
-            return new Intl.NumberFormat('id-ID').format(Math.floor(Math.abs(num))) + (num < 0 ? ' (negatif)' : '');
+    // ----------------------------- RENDZZ ANTI ROKOK CHECK-IN SYSTEM ---------------------------------
+    // Fitur:
+    // - Check-in per hari (hanya sekali per hari)
+    // - Persist dengan localStorage, tidak hilang walau refresh
+    // - Siklus 30 hari: setelah mencapai 30 hari penuh (30 check-in berbeda atau melewati tanggal)
+    //   sistem akan secara otomatis "reset" dan menyimpan data siklus sebelumnya di history arsip.
+    // - Menampilkan progress %, hari ke berapa, sisa hari.
+    // - Setelah reset, data sebelumnya tetap tersimpan di "Previous cycle log" biar bisa lihat capaian lama.
+    // -------------------------------------------------------------------------------------------------
+    
+    // Key storage
+    const STORAGE_KEY = "rendzz_antirokok_main";
+    const ARCHIVE_KEY = "rendzz_archive_cycles";   // menyimpan data siklus sebelumnya (max 5)
+
+    // Data structure:
+    // {
+    //    cycleStartDate: "2025-04-01",   // tanggal mulai siklus (ISO date)
+    //    checkins: ["2025-04-01", "2025-04-02"], // tanggal yang sudah check-in
+    //    lastCheckinDate: "2025-04-01",
+    //    cycleCompleted: false   // flag jika sudah mencapai 30 check-in atau waktu lewat 30 hari tapi kita reset manual/otomatis
+    // }
+    
+    // Helper: tanggal hari ini dalam format YYYY-MM-DD (waktu lokal)
+    function getTodayISO() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+    
+    // Fungsi untuk memulai siklus baru (reset cycle) namun menyimpan siklus sebelumnya ke arsip
+    function startNewCycle(oldData, reason = "manual") {
+        // oldData adalah data siklus yang sedang berjalan sebelum direset
+        let archiveList = [];
+        const storedArchive = localStorage.getItem(ARCHIVE_KEY);
+        if (storedArchive) {
+            try {
+                archiveList = JSON.parse(storedArchive);
+                if (!Array.isArray(archiveList)) archiveList = [];
+            } catch(e) { archiveList = []; }
         }
         
-        // fungsi update counter berdasarkan delta dari startTime
-        function updateCounters() {
-            const now = Date.now();
-            const elapsedSeconds = (now - startTime) / 1000;   // detik pecahan
-            
-            // Total kelahiran = offset awal + (laju per detik * elapsedSeconds)
-            let totalBirths = initialBirths + (BIRTH_RATE_PER_SEC * elapsedSeconds);
-            let totalDeaths = initialDeaths + (DEATH_RATE_PER_SEC * elapsedSeconds);
-            
-            // Pastikan tidak negatif (meski tidak akan terjadi)
-            if (totalBirths < 0) totalBirths = 0;
-            if (totalDeaths < 0) totalDeaths = 0;
-            
-            // Karena data nyata harus integer, kita tampilkan dalam bentuk integer (pembulatan ke bawah / floor)
-            // tapi lebih baik menampilkan angka bulat tanpa koma desimal (seperti jumlah jiwa)
-            const displayBirths = Math.floor(totalBirths);
-            const displayDeaths = Math.floor(totalDeaths);
-            const netPopulation = displayBirths - displayDeaths;
-            
-            // Update DOM
-            birthEl.innerText = displayBirths.toLocaleString('id-ID');
-            deathEl.innerText = displayDeaths.toLocaleString('id-ID');
-            
-            // Net growth: beri warna emosi sedikit (plus / minus)
-            if (netPopulation >= 0) {
-                netEl.innerHTML = `+${netPopulation.toLocaleString('id-ID')}  🌍`;
-                netEl.style.textShadow = "0 0 4px #90ffb0";
+        // Simpan siklus lama ke arsip jika ada check-in dan tidak kosong
+        if (oldData && oldData.checkins && oldData.checkins.length > 0) {
+            const archiveEntry = {
+                archivedAt: getTodayISO(),
+                startDate: oldData.cycleStartDate,
+                totalCheckins: oldData.checkins.length,
+                percentage: Math.floor((oldData.checkins.length / 30) * 100),
+                checkinsCopy: [...oldData.checkins],
+                status: oldData.checkins.length >= 30 ? "COMPLETE 30 HARI" : "RESET DINI"
+            };
+            archiveList.unshift(archiveEntry); // taruh paling atas
+            // batasi maks 5 arsip agar tidak penuh
+            if (archiveList.length > 6) archiveList.pop();
+            localStorage.setItem(ARCHIVE_KEY, JSON.stringify(archiveList));
+        }
+        
+        // Buat data baru untuk cycle
+        const today = getTodayISO();
+        const newCycle = {
+            cycleStartDate: today,
+            checkins: [],
+            lastCheckinDate: null,
+            cycleCompleted: false
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(newCycle));
+        return newCycle;
+    }
+    
+    // Cek apakah siklus harus otomatis reset karena sudah mencapai 30 hari penuh (check-in mencapai 30)
+    function autoResetIfCompleted(data) {
+        if (!data) return false;
+        const checkinLen = data.checkins ? data.checkins.length : 0;
+        if (checkinLen >= 30) {
+            // reset otomatis, panggil startNewCycle dengan data sekarang
+            const newData = startNewCycle(data, "auto_complete");
+            return newData;
+        }
+        return data;
+    }
+    
+    // Load atau inisialisasi data
+    function loadOrInitData() {
+        let raw = localStorage.getItem(STORAGE_KEY);
+        let currentData = null;
+        if (raw) {
+            try {
+                currentData = JSON.parse(raw);
+                if (!currentData.checkins) currentData.checkins = [];
+                if (!currentData.cycleStartDate) currentData.cycleStartDate = getTodayISO();
+            } catch(e) { currentData = null; }
+        }
+        
+        if (!currentData) {
+            // pertama kali
+            const today = getTodayISO();
+            currentData = {
+                cycleStartDate: today,
+                checkins: [],
+                lastCheckinDate: null,
+                cycleCompleted: false
+            };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(currentData));
+        }
+        
+        // Auto reset jika sudah mencapai >=30 check-in (cycle sempurna)
+        const afterAuto = autoResetIfCompleted(currentData);
+        if (afterAuto !== currentData) {
+            currentData = afterAuto;
+        }
+        return currentData;
+    }
+    
+    // Fungsi check-in untuk hari ini
+    function performCheckin(currentData) {
+        const today = getTodayISO();
+        
+        // cek apakah sudah check-in hari ini
+        if (currentData.checkins.includes(today)) {
+            return { success: false, message: "Hari ini sudah check-in! Kembali besok ya 💪" };
+        }
+        
+        // cek apakah siklus sudah mencapai 30? (pengaman, seharusnya sudah di auto reset)
+        if (currentData.checkins.length >= 30) {
+            // auto reset paksa
+            const newCycle = startNewCycle(currentData, "auto_on_checkin");
+            const successNew = newCycle.checkins.includes(today) ? false : true;
+            if (!newCycle.checkins.includes(today)) {
+                newCycle.checkins.push(today);
+                newCycle.lastCheckinDate = today;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(newCycle));
+                return { success: true, message: "✨ Siklus 30 hari terselesaikan! Siklus baru dimulai. Check-in hari ini berhasil! ✨", newData: newCycle };
+            }
+            return { success: false, message: "Check-in gagal, coba refresh", newData: newCycle };
+        }
+        
+        // normal check-in
+        currentData.checkins.push(today);
+        currentData.lastCheckinDate = today;
+        // simpan dulu
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(currentData));
+        
+        // cek ulang apakah setelah push mencapai 30?
+        if (currentData.checkins.length >= 30) {
+            const finalData = autoResetIfCompleted(currentData);
+            if (finalData !== currentData) {
+                return { success: true, message: "🎉 SELAMAT! Anda menyelesaikan 30 HARI tanpa rokok! Siklus baru dimulai secara otomatis. 🎉", newData: finalData };
+            }
+        }
+        return { success: true, message: "✅ Check-in berhasil! Lanjutkan perjuanganmu!", newData: currentData };
+    }
+    
+    // Render semua UI berdasarkan data cycle
+    let currentCycleData = loadOrInitData();
+    
+    // Ambil elemen DOM
+    const progressFillEl = document.getElementById('progressFill');
+    const percentDisplay = document.getElementById('percentDisplay');
+    const currentDayEl = document.getElementById('currentDay');
+    const remainingDaysEl = document.getElementById('remainingDays');
+    const streakMessage = document.getElementById('streakMessage');
+    const checkinBtn = document.getElementById('checkinBtn');
+    const historyListDiv = document.getElementById('historyList');
+    const resetCycleBtn = document.getElementById('resetCycleBtn');
+    
+    function renderDashboard() {
+        if (!currentCycleData) return;
+        const checkins = currentCycleData.checkins || [];
+        const totalChecked = checkins.length;
+        const percent = Math.min(100, Math.floor((totalChecked / 30) * 100));
+        const remaining = Math.max(0, 30 - totalChecked);
+        const currentDayNum = totalChecked;
+        
+        progressFillEl.style.width = percent + "%";
+        if (percent <= 35) progressFillEl.style.background = "linear-gradient(90deg, #ff9966, #ff5e62)";
+        else if (percent <= 70) progressFillEl.style.background = "linear-gradient(90deg, #f6d365, #fda085)";
+        else progressFillEl.style.background = "linear-gradient(90deg, #00b09b, #96c93d)";
+        progressFillEl.innerText = percent + "%";
+        percentDisplay.innerText = percent + "%";
+        currentDayEl.innerText = totalChecked;
+        remainingDaysEl.innerText = remaining;
+        
+        // cek apakah hari ini sudah check-in
+        const today = getTodayISO();
+        const alreadyChecked = checkins.includes(today);
+        if (alreadyChecked) {
+            streakMessage.innerHTML = `🏆 Hari ke-${totalChecked} tercapai! Kamu hebat, pertahankan! 🚭`;
+            checkinBtn.disabled = true;
+            checkinBtn.classList.add('disabled-btn');
+        } else {
+            if (totalChecked >= 30) {
+                streakMessage.innerHTML = `✨ Siklus 30 hari penuh! Klik reset atau sistem auto akan menyimpan. Check-in untuk siklus baru ✨`;
+                checkinBtn.disabled = false;
+                checkinBtn.classList.remove('disabled-btn');
             } else {
-                netEl.innerHTML = `${netPopulation.toLocaleString('id-ID')}  ⚠️`;
-                netEl.style.textShadow = "0 0 4px #ffb090";
+                streakMessage.innerHTML = `📢 Hari ini belum check-in. Klik tombol! ${remaining} hari lagi menuju 30 hari bebas rokok.`;
+                checkinBtn.disabled = false;
+                checkinBtn.classList.remove('disabled-btn');
             }
         }
         
-        // Live clock (waktu lokal)
-        function updateClock() {
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString('id-ID', { hour12: false });
-            clockSpan.innerText = timeStr;
-        }
-        
-        // Fungsi reset (set ulang periode: mulai dari 0 kelahiran dan 0 kematian, dan reset waktu acuan)
-        function resetSimulation() {
-            // Set ulang startTime ke sekarang, dan set offset awal menjadi 0
-            startTime = Date.now();
-            initialBirths = 0;
-            initialDeaths = 0;
-            // langsung update agar angka nol sesaat
-            updateCounters();
-            // efek tambahan : sedikit getaran visual halus (opsional)
-            const card = document.querySelector('.world-card');
-            if(card) {
-                card.style.transform = 'scale(0.99)';
-                setTimeout(() => { if(card) card.style.transform = ''; }, 150);
-            }
-        }
-        
-        // Inisialisasi event listener untuk tombol reset
-        const resetBtn = document.getElementById('resetBtn');
-        if (resetBtn) {
-            resetBtn.addEventListener('click', () => {
-                resetSimulation();
+        // Render history check-in (30 hari terakhir berdasarkan data checkin)
+        renderHistory(currentCycleData);
+    }
+    
+    function renderHistory(data) {
+        const checkinsList = data.checkins || [];
+        // tampilkan daftar check-in terbaru di atas
+        const reversed = [...checkinsList].reverse();
+        if (reversed.length === 0) {
+            historyListDiv.innerHTML = `<div style="color:#86bba8; text-align:center;">✨ Belum ada check-in. Mulai sekarang! ✨</div>`;
+        } else {
+            let html = `<div style="display:flex; flex-direction:column; gap:6px;">`;
+            reversed.slice(0, 31).forEach(date => {
+                html += `<div class="history-item"><span>📅 ${formatDateIndonesia(date)}</span><span>✅ Check-in</span></div>`;
             });
+            html += `</div>`;
+            if (checkinsList.length >= 30) html += `<div style="margin-top:8px; font-size:0.7rem; text-align:center; color:#ffca8a;">🏅 Pencapaian 30 hari sempurna!</div>`;
+            historyListDiv.innerHTML = html;
         }
         
-        // SINKRONISASI AWAL : Apakah kita ingin memulai dengan angka yang mencerminkan data dari awal tahun 2026?
-        // Agar tidak terlihat kosong total saat load, kita bisa set initial offset berdasarkan estimasi sejak 1 Januari 2026 00:00:00 sampai sekarang.
-        // Ini memberikan pengalaman "real-time jumplah sejak awal tahun" yang lebih keren.
-        // Hitung detik yang telah berlalu dari 1 Januari 2026 00:00:00 UTC ke waktu sekarang.
-        // Tetapi karena waktu lokal pengguna bisa berbeda zona, kita gunakan UTC untuk konsistensi.
-        // Hal ini membuat angka awal tidak nol namun sesuai estimasi tahun berjalan.
-        function initializeWithYearOffset() {
-            // 1 Januari 2026, 00:00:00 UTC
-            const startOfYearUTC = Date.UTC(2026, 0, 1, 0, 0, 0);
-            const now = Date.now(); // ms saat ini (local timestamp, tapi perbandingan UTC valid)
-            const secondsSinceYearStart = (now - startOfYearUTC) / 1000;
-            
-            if (secondsSinceYearStart > 0) {
-                // Hitung perkiraan kelahiran & kematian sejak awal tahun
-                let estimatedBirths = BIRTH_RATE_PER_SEC * secondsSinceYearStart;
-                let estimatedDeaths = DEATH_RATE_PER_SEC * secondsSinceYearStart;
-                // Simpan sebagai offset awal (initialBirths / deaths)
-                initialBirths = estimatedBirths;
-                initialDeaths = estimatedDeaths;
-                // startTime kita set ke 'startOfYearUTC' agar delta berjalan mulus dari titik tahun baru?
-                // Tapi supaya updateCounters bekerja dengan formula: total = initial + rate*(now-startTime)
-                // Agar total = estimated + rate*(now - startTime) menghasilkan nilai yang terus bertambah konsisten,
-                // jika startTime = startOfYearUTC, maka:
-                // total = estimatedBirths + rate*(now-startOfYearUTC)
-                // = rate*secondsSinceYearStart + rate*0 = rate*secondsSinceYearStart (sama)
-                // Namun jika kita pakai startTime = startOfYearUTC, maka initialBirths harus 0? agar tidak double.
-                // Cara paling mudah: atur startTime = startOfYearUTC, dan initialBirths = 0, initialDeaths=0.
-                // Tetapi agar angka tampil sesuai estimasi sejak tahun baru, kita cukup set startTime ke awal tahun dan initial 0.
-                // Tapi kita ingin agar angka awal yang muncul langsung besar (misal sudah jutaan) sesuai tahun 2026.
-                // Maka solusi: biarkan startTime = sekarang, dan initialBirths = estimatedBirths, initialDeaths = estimatedDeaths.
-                // Dengan begitu: total = initial + rate*(now - startTime) ; karena startTime = sekarang, delta = 0, total = initial (langsung besar).
-                // Lalu selanjutnya bertambah sesuai laju dari sekarang. Ini paling mudah dan langsung menunjukkan jumlah "sejak 1 Januari 2026 hingga detik ini"
-                startTime = Date.now();  // titik referensi mulai sekarang
-                initialBirths = estimatedBirths;
-                initialDeaths = estimatedDeaths;
+        // tambahkan tampilan arsip siklus sebelumnya (di bawah history list)
+        const archiveData = localStorage.getItem(ARCHIVE_KEY);
+        let archiveHtml = '';
+        if (archiveData) {
+            try {
+                const archives = JSON.parse(archiveData);
+                if (archives && archives.length > 0) {
+                    archiveHtml = `<div style="margin-top: 14px; border-top: 1px dashed #3c7c66; padding-top: 12px;"><span style="font-size:0.75rem; font-weight:bold;">📀 SIKLUS SEBELUMNYA</span><div style="font-size:0.7rem; margin-top:8px;">`;
+                    archives.slice(0, 3).forEach(arch => {
+                        archiveHtml += `<div style="background:#082822; margin-bottom:6px; padding:6px 10px; border-radius: 20px;">✅ Selesai: ${arch.totalCheckins}/30 hari (${arch.percentage}%) — ${arch.status}<br><span style="color:#7fcbad;">Mulai: ${arch.startDate}</span></div>`;
+                    });
+                    archiveHtml += `</div></div>`;
+                }
+            } catch(e) {}
+        }
+        // jika sudah ada history sebelumnya, append tanpa menghilangkan existing
+        const existingArchive = historyListDiv.querySelector('.archive-custom');
+        if (!existingArchive && archiveHtml) {
+            const archiveDiv = document.createElement('div');
+            archiveDiv.className = 'archive-custom';
+            archiveDiv.innerHTML = archiveHtml;
+            historyListDiv.appendChild(archiveDiv);
+        } else if (existingArchive && archiveHtml) {
+            existingArchive.innerHTML = archiveHtml;
+        } else if (!archiveHtml && existingArchive) existingArchive.remove();
+    }
+    
+    function formatDateIndonesia(isoDate) {
+        if (!isoDate) return isoDate;
+        const parts = isoDate.split('-');
+        if (parts.length !== 3) return isoDate;
+        return `${parts[2]}/${parts[1]}/${parts[0]}`;
+    }
+    
+    // Fungsi refresh global, reload data dari storage dan render ulang
+    function refreshAll() {
+        currentCycleData = loadOrInitData();
+        renderDashboard();
+    }
+    
+    // Event check-in
+    async function handleCheckin() {
+        // reload data terbaru sebelum checkin untuk mencegah race condition
+        let freshData = loadOrInitData();
+        const result = performCheckin(freshData);
+        if (result.success) {
+            if (result.newData) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(result.newData));
+                currentCycleData = result.newData;
             } else {
-                // Jika jam sistem mundur ke sebelum 2026 (tidak mungkin di perangkat normal)
-                startTime = Date.now();
-                initialBirths = 0;
-                initialDeaths = 0;
+                // ambil ulang dari storage
+                currentCycleData = loadOrInitData();
             }
-            // update tampilan segera
-            updateCounters();
+            // tampilkan notifikasi kecil
+            streakMessage.innerHTML = `🎉 ${result.message} 🎉`;
+            setTimeout(() => {
+                if (currentCycleData) renderDashboard();
+            }, 30);
+            renderDashboard();
+        } else {
+            streakMessage.innerHTML = `⚠️ ${result.message} ⚠️`;
+            setTimeout(() => renderDashboard(), 1500);
+            renderDashboard();
         }
-        
-        // agar angka terus bergerak dinamis dan jam realtime
-        function startLiveUpdates() {
-            // update counter setiap 50ms (smooth incremental)
-            if(intervalId) clearInterval(intervalId);
-            intervalId = setInterval(() => {
-                updateCounters();
-                updateClock();
-            }, 80);  // 80ms cukup mulus & ringan
+    }
+    
+    // reset manual cycle (simpan siklus lama, mulai baru)
+    function handleManualReset() {
+        if (confirm("⚠️ RESET MANUAL: akan memulai siklus 30 hari baru. Data siklus saat ini akan disimpan ke riwayat pencapaian. Lanjutkan?")) {
+            const oldData = loadOrInitData();
+            const newCycle = startNewCycle(oldData, "manual_reset");
+            currentCycleData = newCycle;
+            renderDashboard();
+            streakMessage.innerHTML = "🔄 Siklus baru dimulai! Semangat 30 hari bebas asap rokok!";
+            setTimeout(() => renderDashboard(), 100);
         }
-        
-        // memastikan jam diperbarui setiap detik juga, namun sudah di setInterval, jadi ok.
-        // tambahan: event visibility change (tidak perlu rumit)
-        
-        // Inisialisasi utama
-        initializeWithYearOffset();   // set angka awal dari estimasi tahun 2026
-        startLiveUpdates();
-        
-        // Ekstra: Jaga akurasi jika halaman tidak aktif (interval tetap jalan tapi fine)
-        // Tidak perlu mematikan, karena performa ringan.
-        // Optional: saat window focus, sinkronkan ulang startTime untuk menghindari drift? tidak masalah.
-        // Namun jika pengguna mengganti waktu sistem secara drastis? itu edge case, abaikan.
-        
-        // Bonus: tooltip dinamis menampilkan kecepatan per jam
-        const birthRateSpan = document.querySelector('.stat-card:first-child .stat-rate');
-        const deathRateSpan = document.querySelector('.stat-card:last-child .stat-rate');
-        if(birthRateSpan) birthRateSpan.innerHTML = `📈 +${BIRTH_RATE_PER_SEC} kelahiran / detik (≈ ${(BIRTH_RATE_PER_SEC*3600).toFixed(0)}/jam)`;
-        if(deathRateSpan) deathRateSpan.innerHTML = `📉 +${DEATH_RATE_PER_SEC} kematian / detik (≈ ${(DEATH_RATE_PER_SEC*3600).toFixed(0)}/jam)`;
-        
-        // Efek interaksi tambahan pada kartu
-        const cards = document.querySelectorAll('.stat-card');
-        cards.forEach(card => {
-            card.addEventListener('mouseenter', (e) => {
-                card.style.transition = '0.15s';
-            });
-        });
-        
-        // Tampilkan pesan sambutan ringan di console (optional)
-        console.log('🌍 Live counter kelahiran & kematian global — data estimasi 4.2/s lahir & 1.9/s meninggal.');
-        
-        // Perbaiki saat resize atau potrait, tetap rapi
-        window.addEventListener('resize', () => {});
-        
-        // memastikan nilai net tidak aneh pada load pertama
-        setTimeout(() => updateCounters(), 10);
-    })();
+    }
+    
+    checkinBtn.addEventListener('click', handleCheckin);
+    resetCycleBtn.addEventListener('click', handleManualReset);
+    
+    // render awal & cek tengah malam secara sederhana (ketika halaman dimuat ulang)
+    renderDashboard();
+    
+    // Optional: setiap kali tab focus, refresh (biar konsisten)
+    window.addEventListener('focus', () => {
+        refreshAll();
+    });
+    
+    // interval sederhana untuk update visual jika lewat tengah malam tanpa refresh? (optional)
+    setInterval(() => {
+        const newData = loadOrInitData();
+        if (JSON.stringify(newData.checkins) !== JSON.stringify(currentCycleData.checkins) ||
+            newData.cycleStartDate !== currentCycleData.cycleStartDate) {
+            currentCycleData = newData;
+            renderDashboard();
+        } else {
+            // tetap refresh untuk update tombol enable/disable berdasarkan tanggal
+            const today = getTodayISO();
+            const already = currentCycleData.checkins.includes(today);
+            if (!already && checkinBtn.disabled === true) {
+                renderDashboard();
+            } else if (already && checkinBtn.disabled === false) {
+                renderDashboard();
+            }
+        }
+    }, 30000);
 </script>
 </body>
 </html>
